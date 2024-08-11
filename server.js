@@ -20,17 +20,22 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
-
-// Serve static files from the 'public' directory
+const upload = multer({ storage: storage }).array('files', 10); // Allow up to 10 files at once// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Ensure that files in the 'uploads' directory are accessible
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // Endpoint to handle file upload
-app.post('/upload', upload.single('file'), (req, res) => {
-    res.send({ fileName: req.file.originalname });
+app.post('/upload', (req, res) => {
+    upload(req, res, function (err) {
+        if (err) {
+            return res.status(500).json(err);
+        }
+        // Send back an array of filenames to the client
+        const fileNames = req.files.map(file => file.originalname);
+        res.send({ fileNames });
+    });
 });
 
 io.on('connection', (socket) => {

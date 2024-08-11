@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snapdrop Clone</title>
+    <title>ShareFFS</title>
     <style>
         body {
             display: flex;
@@ -24,11 +24,35 @@
             cursor: pointer;
             background-color: #fff;
         }
+        #fileListContainer li {
+        margin-bottom: 8px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    #fileListContainer li a {
+        font-size: 16px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    #fileListContainer li a:hover {
+        text-decoration: underline;
+    }
     </style>
 </head>
 <body>
     <div id="dropzone">
         Drop files here or click to upload
+    </div>
+
+    <input type="file" id="fileInput" multiple hidden>
+
+    <div id="fileList" style="margin-top: 20px;">
+        <h3>Uploaded Files:</h3>
+        <ul id="fileListContainer" style="list-style-type: none; padding: 0;"></ul>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -41,43 +65,56 @@
             e.preventDefault();
         });
 
-        dropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const file = e.dataTransfer.files[0];
-            uploadFile(file);
-        });
-
-        // Handle file selection
-        dropzone.addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.onchange = (e) => {
-                const file = e.target.files[0];
-                uploadFile(file);
-            };
-            input.click();
-        });
-
-        function uploadFile(file) {
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/upload', {
-                method: 'POST',
-                body: formData
-            }).then(res => res.json())
-              .then(data => {
-                  socket.emit('file-upload', data.fileName);
-              });
+    function uploadFiles(files) {
+        const formData = new FormData();
+        for (const file of files) {
+            formData.append('files', file);
         }
 
-        socket.on('file-receive', (fileName) => {
-            const link = document.createElement('a');
-            link.href = `/uploads/${fileName}`;
-            link.textContent = `Download ${fileName}`;
-            document.body.appendChild(link);
-            document.body.appendChild(document.createElement('br'));
-        });
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            data.fileNames.forEach(fileName => {
+                socket.emit('file-upload', fileName);
+            });
+        })
+        .catch(error => console.error('Error uploading files:', error));
+    }
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadFiles(e.dataTransfer.files); // Handle dropped files
+    });
+
+    dropzone.addEventListener('click', () => {
+        const input = document.getElementById('fileInput');
+        input.onchange = (e) => {
+            uploadFiles(e.target.files); // Handle files selected from file dialog
+        };
+        input.click();
+    });
+
+socket.on('file-receive', (fileName) => {
+    const fileListContainer = document.getElementById('fileListContainer');
+
+    // Create a new list item for each file
+    const listItem = document.createElement('li');
+    listItem.style.marginBottom = '10px';
+
+    // Create the download link
+    const link = document.createElement('a');
+    link.href = `/uploads/${fileName}`;
+    link.textContent = fileName;
+    link.style.textDecoration = 'none';
+    link.style.color = '#007bff';
+
+    // Append the link to the list item and the list item to the container
+    listItem.appendChild(link);
+    fileListContainer.appendChild(listItem);
+});
     </script>
 </body>
 </html>
