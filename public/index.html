@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapdrop Clone</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #dropzone {
+            width: 300px;
+            height: 200px;
+            border: 2px dashed #007BFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="dropzone">
+        Drop files here or click to upload
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const socket = io();
+
+        // Handle file drop
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            uploadFile(file);
+        });
+
+        // Handle file selection
+        dropzone.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                uploadFile(file);
+            };
+            input.click();
+        });
+
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            }).then(res => res.json())
+              .then(data => {
+                  socket.emit('file-upload', data.fileName);
+              });
+        }
+
+        socket.on('file-receive', (fileName) => {
+            const link = document.createElement('a');
+            link.href = `/uploads/${fileName}`;
+            link.textContent = `Download ${fileName}`;
+            document.body.appendChild(link);
+            document.body.appendChild(document.createElement('br'));
+        });
+    </script>
+</body>
+</html>
