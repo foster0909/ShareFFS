@@ -4,15 +4,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShareFFS</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
+
     <style>
+    :root {
+    --primary-color: #007bff;
+    --secondary-color: #f1f1f1;
+    --text-color: #333;
+    --background-color: #f9f9f9;
+    --border-radius: 15px;
+    --font-family: 'Poppins', sans-serif;
+    }
+    #chatButton {
+        position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-family);
+    transition: transform 0.3s ease-in-out;
+}
+
+#chatButton:hover {
+    transform: scale(1.1);
+}
+    #chatHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chatContent {
+    position: fixed;
+    bottom: 70px; /* Above the chat button */
+    right: 20px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: none; /* Initially hidden *//* Hidden by default */
+}
+
+#chatContainer.hidden {
+    display: none;
+}
+
+#chatHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chatContent {
+    margin-top: 10px;
+}
+
+
+
+#chatContainer.show #chatContent {
+    display: block;
+}
+
+    h1 {
+    font-size: 2.5em;
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+
+    }
+
+    button {
+    padding: 10px 16px;  /* Adjusted padding for a shorter and bigger look */
+    font-family: var(--font-family);
+    font-size: 18px;  /* Increased font size for a bolder appearance */
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 25px;  /* More rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;  /* Adjust if you want to control the button width manually */
+    max-width: 250px;  /* Optional: Limit the maximum width */
+    text-align: center;  /* Center the text */
+    }
+
+    button:hover {
+        background-color: darken(var(--primary-color), 10%);
+        transform: scale(1.05);  /* Slightly increased scale for better effect */
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+    .container > * {
+    margin-bottom: 20px;
+}
+
+.container h3, .container button {
+    margin-top: 0;
+}
+
+#deviceList li, #fileListContainer li {
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+    #fileListContainer {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+
+#fileListContainer.hidden {
+    opacity: 0;
+    max-height: 0;
+}
+
+#fileListContainer.visible {
+    opacity: 1;
+    max-height: 300px;
+}
+
+
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
         }
+        .container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
         #dropzone {
             width: 300px;
             height: 200px;
@@ -31,6 +170,73 @@
         border-radius: 5px;
         background-color: #f9f9f9;
     }
+    
+    #deviceList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#deviceList li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s;
+}
+
+#deviceList li:hover {
+    background-color: #f1f1f1;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+h1 {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5em;
+    color: #333;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    #chatContainer {
+        right: 10px;
+        bottom: 10px;
+        width: 90%; /* Make the chat container take most of the screen width */
+        max-width: 350px;
+        padding: 10px;
+    }
+    #messages {
+        height: 150px; /* Adjust height to fit better on smaller screens */
+        padding: 5px;
+    }
+
+    #chatForm {
+        flex-direction: column; /* Stack input and button vertically */
+        gap: 5px;
+    }
+
+    #chatInput {
+        width: 100%; /* Make the input field full width */
+        padding: 8px;
+    }
+
+    #chatForm button {
+        width: 100%; /* Make the button full width */
+        padding: 8px;
+    }
+    button {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    #fileListContainer {
+        max-height: 200px;
+    }
+
+    #deviceList li {
+        font-size: 14px;
+    }
+}
 
     #fileListContainer li a {
         font-size: 16px;
@@ -41,25 +247,258 @@
     #fileListContainer li a:hover {
         text-decoration: underline;
     }
+    #deviceListContainer li {
+       margin-bottom: 8px;
+       padding: 8px;
+       border: 1px solid #ddd;
+       border-radius: 5px;
+       background-color: #f9f9f9;
+   }
+   #deviceListContainer {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    #deviceListContainer ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    #deviceListContainer li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #deviceListContainer li:last-child {
+        border-bottom: none;
+    }
+
+    #deviceListContainer li:hover {
+        background-color: #e9ecef;
+    }
+    #fileListContainer {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    #fileListContainer ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    #fileListContainer li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #fileListContainer li:last-child {
+        border-bottom: none;
+    }
+
+    #fileListContainer li:hover {
+        background-color: #e9ecef;
+    }
+
+    #fileListContainer, #deviceList {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.hidden {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.visible {
+    max-height: 300px;
+    opacity: 1;
+    overflow-y: auto;
+}
+
+#deviceList li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+#deviceList li:hover {
+    background-color: #f1f1f1;
+}
+
+#chatContainer {
+    position: fixed;
+    bottom: 70px; /* Above the chat button */
+    right: 20px;
+    width: 300px;
+    max-height: 80vh; /* Limit height to prevent overflow */
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    overflow: hidden; 
+}
+#uploadedFiles {
+    margin-bottom: 20px; /* To ensure space above the chat button */
+}
+#messages {
+    height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-color);
+}
+
+#chatForm {
+    display: flex;
+    flex-direction: column; /* Stack input and button vertically */
+    gap: 5px;
+}
+
+#chatInput {
+    flex: 1;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+}
+
+#chatForm button {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Make the button full width */
+    box-sizing: border-box; /* Ensure padding is included in width */
+    transition: background-color 0.3s;
+}
+
+#chatForm button:hover {
+    background-color: darken(var(--primary-color), 10%);
+}
+
+input[type="checkbox"] {
+    margin-right: 15px;
+}
     </style>
 </head>
 <body>
+    <h1>Share FFS</h1>
     <div id="dropzone">
         Drop files here or click to upload
     </div>
 
+    <div id="deviceDropdown" style="margin-top: 20px;">
+        <button id="toggleDevices" style="padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Show Connected Devices
+        </button>
+        <div id="deviceListContainer" style="display: none; margin-top: 10px;">
+            <h3>Connected Devices:</h3>
+            <ul id="deviceList" style="list-style-type: none; padding: 0; margin: 0;"></ul>
+        </div>
+    </div>
+
     <input type="file" id="fileInput" multiple hidden>
 
-    <div id="fileList" style="margin-top: 20px;">
-        <h3>Uploaded Files:</h3>
-        <ul id="fileListContainer" style="list-style-type: none; padding: 0;"></ul>
+    <div id="fileDropdown" style="margin-top: 20px;">
+        <button id="toggleFiles" style="padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Show Uploaded Files
+        </button>
+        <div id="fileListContainer" style="display: none; margin-top: 10px;">
+            <h3>Uploaded Files:</h3>
+            <ul id="fileList" style="list-style-type: none; padding: 0; margin: 0;"></ul>
+        </div>
     </div>
+    <div id="chatButton">Chat</div>
+
+    <div id="chatContainer" class="hidden">
+        <div id="chatHeader">
+            <h3>Chat</h3>
+            <button id="chatClose">X</button>
+        </div>
+        <div id="chatContent">
+            <div id="messages"></div>
+            <form id="chatForm">
+                <input id="chatInput" autocomplete="off" placeholder="Type a message..." />
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        const toggleFilesButton = document.getElementById('toggleFiles');
+        const fileListContainer = document.getElementById('fileListContainer');
+        const fileList = document.getElementById('fileList');
+        const toggleDevicesButton = document.getElementById('toggleDevices');
+        const deviceListContainer = document.getElementById('deviceListContainer');
+        const deviceList = document.getElementById('deviceList');
         const dropzone = document.getElementById('dropzone');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const messages = document.getElementById('messages');
+        const chatToggle = document.getElementById('chatToggle');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatButton = document.getElementById('chatButton');
+        const chatClose = document.getElementById('chatClose');
         const socket = io();
+        
 
+        chatButton.addEventListener('click', function() {
+    chatContainer.classList.toggle('hidden');
+    chatContainer.classList.toggle('show'); // Ensure content is shown
+});
+
+chatClose.addEventListener('click', function() {
+    chatContainer.classList.add('hidden');
+    chatContainer.classList.remove('show');
+});
+
+    
+
+        chatForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (chatInput.value) {
+        socket.emit('chat message', chatInput.value);
+        chatInput.value = '';
+    }
+});
+
+socket.on('chat message', function(msg) {
+    const item = document.createElement('div');
+    item.textContent = msg;
+    messages.appendChild(item);
+    messages.scrollTop = messages.scrollHeight; // Auto scroll to the bottom
+});   
+
+        // Toggle the visibility of the file list
+    toggleFilesButton.addEventListener('click', () => {
+    if (fileListContainer.style.display === 'none') {
+        fileListContainer.style.display = 'block';
+        toggleFilesButton.textContent = 'Hide Uploaded Files';
+    } else {
+        fileListContainer.style.display = 'none';
+        toggleFilesButton.textContent = 'Show Uploaded Files';
+    }
+    });
         // Handle file drop
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -97,24 +536,84 @@
         input.click();
     });
 
+// Handle incoming file updates
 socket.on('file-receive', (fileName) => {
-    const fileListContainer = document.getElementById('fileListContainer');
-
-    // Create a new list item for each file
+    // Add a new file to the list
     const listItem = document.createElement('li');
-    listItem.style.marginBottom = '10px';
-
-    // Create the download link
     const link = document.createElement('a');
     link.href = `/uploads/${fileName}`;
     link.textContent = fileName;
     link.style.textDecoration = 'none';
     link.style.color = '#007bff';
+    link.style.display = 'block';
+    link.style.marginBottom = '5px';
+    link.style.wordBreak = 'break-all'; // Ensure long file names break onto the next line if needed
 
-    // Append the link to the list item and the list item to the container
     listItem.appendChild(link);
-    fileListContainer.appendChild(listItem);
+    fileList.appendChild(listItem);
 });
+
+// Toggle the visibility of the device list
+toggleDevicesButton.addEventListener('click', () => {
+    if (deviceListContainer.style.display === 'none') {
+        deviceListContainer.style.display = 'block';
+        toggleDevicesButton.textContent = 'Hide Connected Devices';
+    } else {
+        deviceListContainer.style.display = 'none';
+        toggleDevicesButton.textContent = 'Show Connected Devices';
+    }
+});
+
+
+socket.on('device-update', (data) => {
+    if (data.name) {
+        // Add a new device to the list
+        const listItem = document.createElement('li');
+        listItem.textContent = `${data.name} (${data.ip})`;
+        listItem.dataset.ip = data.ip;
+        deviceList.appendChild(listItem);
+    } else {
+        // Remove the device from the list
+        const items = deviceList.querySelectorAll('li');
+        items.forEach(item => {
+            if (item.dataset.ip === data.ip) {
+                item.remove();
+            }
+        });
+    }
+});
+
+// Optionally, fetch the current list of devices when the page loads
+fetch('/devices')
+    .then(response => response.json())
+    .then(devices => {
+        for (const [ip, name] of Object.entries(devices)) {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${name} (${ip})`;
+            listItem.dataset.ip = ip;
+            deviceList.appendChild(listItem);
+        }
+    });
+
+    fetch('/files') // Make sure to implement this endpoint in your server
+    .then(response => response.json())
+    .then(files => {
+        for (const fileName of files) {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `/uploads/${fileName}`;
+            link.textContent = fileName;
+            link.style.textDecoration = 'none';
+            link.style.color = '#007bff';
+            link.style.display = 'block';
+            link.style.marginBottom = '5px';
+            link.style.wordBreak = 'break-all'; 
+
+            listItem.appendChild(link);
+            fileList.appendChild(listItem);
+        }
+    });
     </script>
+
 </body>
 </html>

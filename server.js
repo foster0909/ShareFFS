@@ -8,7 +8,52 @@ const fs = require('fs');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+const devices = {};
 
+app.use(express.static('public'));
+
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    // Listen for chat messages
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg); // Broadcast to all users
+    });
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
+    });
+});
+
+
+
+io.on('connection', (socket) => {
+    const ip = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+    const deviceName = generateRandomName();
+    devices[ip] = deviceName;
+
+    // Notify all clients about the new device
+    io.emit('device-update', { ip, name: deviceName });
+
+    socket.on('disconnect', () => {
+        delete devices[ip];
+        io.emit('device-update', { ip, name: null }); // Notify all clients about the disconnection
+    });
+
+    console.log(`New device connected: ${ip}`);
+});
+// When a device connects, its IP address is recorded and a random name is assigned. When a device disconnects, it’s removed from the list.
+function generateRandomName() {
+    const adjectives = ['Red', 'Blue', 'Green', 'Fast', 'Slow'];
+    const nouns = ['Lion', 'Tiger', 'Bear', 'Eagle', 'Shark'];
+    const randomAdj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+    return `${randomAdj}-${randomNoun}`;
+}
+
+app.get('/devices', (req, res) => {
+    res.json(devices);
+});
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
