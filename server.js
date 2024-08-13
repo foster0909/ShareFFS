@@ -51,6 +51,7 @@ function generateRandomName() {
     return `${randomAdj}-${randomNoun}`;
 }
 
+
 app.get('/devices', (req, res) => {
     res.json(devices);
 });

@@ -3,28 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShareFFS</title>
+    <title>ShareFFS!!!</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
 
     <style>
     :root {
-    --primary-color: #007bff;
+    --primary-color: #504945;
     --secondary-color: #f1f1f1;
     --text-color: #333;
-    --background-color: #f9f9f9;
+    background-color: #282828;
     --border-radius: 15px;
     --font-family: 'Poppins', sans-serif;
     }
+
+    /* Title Container */
+#titleContainer {
+    position: relative;
+    border-radius: 10px;
+    text-align: center;
+    padding: 32px;
+    background-color: #282828; /* Fallback background color */
+    color: #ebdbb2; /* Title text color */
+}
+
+/* Title Text */
+#titleText {
+    position: relative;
+    z-index: 2; /* Ensure text is on top of the GIF */
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
     #chatButton {
-        position: fixed;
+    position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: var(--primary-color);
-    color: #fff;
+    background-color: #2c2c2c;
+    color: #ebdbb2;
     padding: 10px 20px;
     border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     font-family: var(--font-family);
     transition: transform 0.3s ease-in-out;
 }
@@ -33,27 +53,34 @@
     transform: scale(1.1);
 }
     #chatHeader {
-    display: flex;
+        display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
+
 #chatContent {
-    position: fixed;
-    bottom: 70px; /* Above the chat button */
-    right: 20px;
-    width: 300px;
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    display: none; /* Initially hidden *//* Hidden by default */
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
 }
 
 #chatContainer.hidden {
     display: none;
 }
+@media only screen and (max-width: 768px) {
+    #titleContainer {
+        background: url("tumblr_n9yumpiQ3y1rmdq5eo8_500.gif") no-repeat center center;
+        background-size: cover;
+        background-blend-mode: multiply; /* To make text stand out against the GIF */
+    }
 
+    #titleText {
+        color: #ebdbb249; /* Light beige text color */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add a shadow for better readability */
+    }
+}
 #chatHeader {
     display: flex;
     justify-content: space-between;
@@ -82,15 +109,17 @@
     padding: 10px 16px;  /* Adjusted padding for a shorter and bigger look */
     font-family: var(--font-family);
     font-size: 18px;  /* Increased font size for a bolder appearance */
-    color: #fff;
-    background-color: var(--primary-color);
+    color: #a89984;
+    background: #2c2c2c;
     border: none;
     border-radius: 25px;  /* More rounded corners */
     cursor: pointer;
+    margin-top: 10px auto;
     transition: background-color 0.3s, transform 0.2s;
     width: 100%;  /* Adjust if you want to control the button width manually */
     max-width: 250px;  /* Optional: Limit the maximum width */
     text-align: center;  /* Center the text */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     button:hover {
@@ -107,7 +136,8 @@
 }
 
 .container h3, .container button {
-    margin-top: 0;
+    margin: 0;
+    color: #504945;
 }
 
 #deviceList li, #fileListContainer li {
@@ -116,8 +146,8 @@
 }
 
     #fileListContainer {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #a89984;
+    border: 2px solid #504945;
     border-radius: 5px;
     max-height: 300px;
     overflow-y: auto;
@@ -137,53 +167,74 @@
 
 
         body {
-            font-family: var(--font-family);
-            background-color: var(--background-color);
-            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #a89984 /* Light gray background */
+            color: #504945; /* Darker text color for contrast */
             margin: 0;
-            padding: 20px;
+            padding: 50px;
         }
         .container {
-    background-color: #fff;
+    background-color: #a89984;
     padding: 20px;
     border-radius: var(--border-radius);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     margin: 0 auto;
 }
+#mainContainer, #rightSidebar {
+    padding: 20px; /* Add padding to containers */
+}
 
         #dropzone {
-            width: 300px;
-            height: 200px;
-            border: 2px dashed #007BFF;
+            position: relative;
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            height: 150px;
+            border: 4px #504945;
             display: flex;
+            border-radius: 15px;
             justify-content: center;
             align-items: center;
             text-align: center;
             cursor: pointer;
-            background-color: #fff;
+            background-color: #a89984;
         }
         #fileListContainer li {
         margin-bottom: 8px;
         padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
+        border: 2px solid #504945;
+        border-radius: 15px;
+        background-color: #a89984;
     }
     
     #deviceList {
-    list-style-type: none;
+     list-style-type: none; /* Remove default list styling */
     padding: 0;
-}
+    margin: 20px auto;
+    width: 90%;
+    max-width: 600px;
+    background-color: #a89984; /* White background for list */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+
+
 
 #deviceList li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.2s;
+    padding: 15px;
+    font-size: 18px;
+    border-bottom: 2px solid #504945; /* Light gray border */
+    border-radius: 8px;
+    background-color: #a89984; /* Slightly off-white */
+    margin-bottom: 5px;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
 #deviceList li:hover {
-    background-color: #f1f1f1;
+    background-color: #f0f0f0; /* Light gray on hover */
+    transform: scale(1.02); /* Slight zoom effect */
 }
 
 input[type="checkbox"] {
@@ -193,8 +244,55 @@ h1 {
     text-align: center;
     font-family: 'Roboto', sans-serif;
     font-size: 2.5em;
-    color: #333;
+    color: #ebdbb2;
     margin-top: 20px;
+}
+
+/* Kitten Container */
+#kittenContainer {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    height: auto;
+    z-index: 1000; /* Make sure it's on top of other elements */
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for contrast */
+    border-radius: 15px; /* Rounded corners for modern look */
+    padding: 10px; /* Space around the GIF */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Drop shadow to make it stand out */
+}
+
+/* Kitten Video/GIF */
+#kittenVideo {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+
+@media only screen and (max-width: 768px) {
+    #titleContainer {
+        background: url("tumblr_n9yumpiQ3y1rmdq5eo8_500.gif") no-repeat center center;
+        background-size: cover;
+        background-blend-mode: multiply; /* To make text stand out against the GIF */
+    }
+    #dropzone {
+    width: 80%; /* Increase width on smaller screens */
+    margin-top: 10px;
+    height: 90px;
+    padding: 35px;
+    }
+    #titleText {
+        color: #ebdbb2; /* Light beige text color */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Add a shadow for better readability */
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #kittenContainer {
+        display: none;
+    }
 }
 
 @media (max-width: 600px) {
@@ -216,6 +314,7 @@ h1 {
     }
 
     #chatInput {
+
         width: 100%; /* Make the input field full width */
         padding: 8px;
     }
@@ -240,7 +339,7 @@ h1 {
 
     #fileListContainer li a {
         font-size: 16px;
-        color: #007bff;
+        color: #7c6f64;
         text-decoration: none;
     }
 
@@ -250,16 +349,17 @@ h1 {
     #deviceListContainer li {
        margin-bottom: 8px;
        padding: 8px;
-       border: 1px solid #ddd;
+       border: 2px solid #504945;
        border-radius: 5px;
        background-color: #f9f9f9;
    }
    #deviceListContainer {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        background-color: #7c6f64;
+        border: 2px solid #504945;
+        border-radius: 15px;
         max-height: 300px;
         overflow-y: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     #deviceListContainer ul {
@@ -269,7 +369,8 @@ h1 {
 
     #deviceListContainer li {
         padding: 10px;
-        border-bottom: 1px solid #ddd;
+        border: 1px solid #504945;
+        margin-left: 10px;
     }
 
     #deviceListContainer li:last-child {
@@ -277,14 +378,15 @@ h1 {
     }
 
     #deviceListContainer li:hover {
-        background-color: #e9ecef;
+        background-color: #ebdbb2
     }
     #fileListContainer {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
+        background-color: #ebdbb2;
+        border: 2px solid #504945;
         border-radius: 5px;
         max-height: 300px;
         overflow-y: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     #fileListContainer ul {
@@ -294,7 +396,8 @@ h1 {
 
     #fileListContainer li {
         padding: 10px;
-        border-bottom: 1px solid #ddd;
+        border: 2px solid #504945;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     #fileListContainer li:last-child {
@@ -302,13 +405,13 @@ h1 {
     }
 
     #fileListContainer li:hover {
-        background-color: #e9ecef;
+        background-color: #504945;
     }
 
     #fileListContainer, #deviceList {
-    background-color: var(--secondary-color);
+    background: #7c6f64;
     border-radius: var(--border-radius);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(234, 168, 138, 0.1);
     padding: 10px;
     transition: max-height 0.4s ease, opacity 0.3s ease;
 }
@@ -328,41 +431,41 @@ h1 {
 #deviceList li {
     padding: 10px;
     margin: 5px 0;
-    background-color: #fff;
+    background-color: #ebdbb2;
     border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     transition: background-color 0.2s;
 }
 
 #deviceList li:hover {
-    background-color: #f1f1f1;
+    background-color: #ebdbb2;
 }
 
 #chatContainer {
     position: fixed;
-    bottom: 70px; /* Above the chat button */
+    bottom: 20px;
     right: 20px;
     width: 300px;
-    max-height: 80vh; /* Limit height to prevent overflow */
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    background-color: #3c3836;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     padding: 15px;
-    overflow: hidden; 
+    overflow: hidden;
+    border: 1px solid #282828; 
 }
 #uploadedFiles {
     margin-bottom: 20px; /* To ensure space above the chat button */
 }
 #messages {
-    height: 200px;
+    flex: 1;
     overflow-y: auto;
-    margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    background-color: var(--secondary-color);
+    background-color: #a89984;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
 #chatForm {
@@ -373,25 +476,24 @@ h1 {
 
 #chatInput {
     flex: 1;
+    background: #d5c4a1;
     padding: 10px;
-    border-radius: var(--border-radius);
-    border: 1px solid #ddd;
+    border-radius: 8px;
+    border: 3px solid #504945;
 }
 
 #chatForm button {
     padding: 10px;
-    border-radius: var(--border-radius);
-    background-color: var(--primary-color);
+    border-radius: 8px;
+    background-color: #282828;
     color: #fff;
     border: none;
     cursor: pointer;
-    width: 100%; /* Make the button full width */
-    box-sizing: border-box; /* Ensure padding is included in width */
     transition: background-color 0.3s;
 }
 
 #chatForm button:hover {
-    background-color: darken(var(--primary-color), 10%);
+    background-color: #a89984;
 }
 
 input[type="checkbox"] {
@@ -400,25 +502,30 @@ input[type="checkbox"] {
     </style>
 </head>
 <body>
-    <h1>Share FFS</h1>
+    <div id="titleContainer">
+        <h1 id="titleText">Share FFS!!!</h1>
+    </div>
     <div id="dropzone">
         Drop files here or click to upload
     </div>
-
-    <div id="deviceDropdown" style="margin-top: 20px;">
-        <button id="toggleDevices" style="padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    <div id="kittenContainer">
+        <img src="tumblr_n9yumpiQ3y1rmdq5eo8_500.gif" alt="Cute Kitten" id="kittenVideo">
+    </div>
+    
+    <div id="deviceDropdown">
+        <button id="toggleDevices" style="padding: 20px; margin-left: 30px; background-color: #504945; color: #ebdbb2; border: none; border-radius: 50px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); cursor: pointer;">
             Show Connected Devices
         </button>
-        <div id="deviceListContainer" style="display: none; margin-top: 10px;">
+        <div id="deviceListContainer" style="display: none; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 5px;">
             <h3>Connected Devices:</h3>
-            <ul id="deviceList" style="list-style-type: none; padding: 0; margin: 0;"></ul>
+            <ul id="deviceList" style="list-style-type: none; padding: 0; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  margin: 0;"></ul>
         </div>
     </div>
 
     <input type="file" id="fileInput" multiple hidden>
 
-    <div id="fileDropdown" style="margin-top: 20px;">
-        <button id="toggleFiles" style="padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    <div id="fileDropdown">
+        <button id="toggleFiles" style="padding: 20px; margin: 30px; background-color: #504945; color: #ebdbb2; border: none; border-radius: 50px; cursor: pointer;">
             Show Uploaded Files
         </button>
         <div id="fileListContainer" style="display: none; margin-top: 10px;">
@@ -430,7 +537,7 @@ input[type="checkbox"] {
 
     <div id="chatContainer" class="hidden">
         <div id="chatHeader">
-            <h3>Chat</h3>
+            <h3 style="color: #a89984;">Chat</h3>
             <button id="chatClose">X</button>
         </div>
         <div id="chatContent">
