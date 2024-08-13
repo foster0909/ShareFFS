@@ -22,6 +22,7 @@
     border-radius: 10px;
     text-align: center;
     padding: 32px;
+    margin: 20px 0;
     background-color: #282828; /* Fallback background color */
     color: #ebdbb2; /* Title text color */
 }
@@ -30,7 +31,8 @@
 #titleText {
     position: relative;
     z-index: 2; /* Ensure text is on top of the GIF */
-    font-size: 24px;
+    font-size: 2em;
+    color: #ebdbb2;
     font-weight: bold;
     margin: 0;
 }
@@ -53,7 +55,9 @@
     transform: scale(1.1);
 }
     #chatHeader {
-        display: flex;
+    color: #ebdbb2;
+    border-radius: 30px;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
@@ -70,6 +74,16 @@
     display: none;
 }
 @media only screen and (max-width: 768px) {
+    body {
+        margin-left: 20px; /* Adjust this value to move everything to the right */
+    }
+    #deviceDropdown,
+    #fileDropdown {
+        margin-left: 10px; /* Adjust as needed */
+    }
+    #dropzone {
+        margin-left: 10px;
+    }
     #titleContainer {
         background: url("tumblr_n9yumpiQ3y1rmdq5eo8_500.gif") no-repeat center center;
         background-size: cover;
@@ -106,21 +120,47 @@
     }
 
     button {
-    padding: 10px 16px;  /* Adjusted padding for a shorter and bigger look */
-    font-family: var(--font-family);
-    font-size: 18px;  /* Increased font size for a bolder appearance */
-    color: #a89984;
-    background: #2c2c2c;
+        background-color: #504945;
+    color: #ebdbb2;
     border: none;
-    border-radius: 25px;  /* More rounded corners */
+    border-radius: 50px;
+    padding: 15px 30px;
     cursor: pointer;
-    margin-top: 10px auto;
-    transition: background-color 0.3s, transform 0.2s;
-    width: 100%;  /* Adjust if you want to control the button width manually */
-    max-width: 250px;  /* Optional: Limit the maximum width */
-    text-align: center;  /* Center the text */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    margin: 10px;
     }
+
+    .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #282828;
+    color: #ebdbb2;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
 
     button:hover {
         background-color: darken(var(--primary-color), 10%);
@@ -167,11 +207,11 @@
 
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #a89984 /* Light gray background */
-            color: #504945; /* Darker text color for contrast */
-            margin: 0;
-            padding: 50px;
+            background-color: #282828; /* Dark background for modern look */
+    color: #ebdbb2; /* Light text color */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
         }
         .container {
     background-color: #a89984;
@@ -188,17 +228,18 @@
         #dropzone {
             position: relative;
             width: 50%;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             height: 150px;
-            border: 4px #504945;
+            border: 2px dashed #ebdbb2;
             display: flex;
             border-radius: 15px;
             justify-content: center;
             align-items: center;
             text-align: center;
             cursor: pointer;
-            background-color: #a89984;
+            background-color: #333;
+            color: #ebdbb2;
         }
         #fileListContainer li {
         margin-bottom: 8px;
@@ -213,6 +254,7 @@
     padding: 0;
     margin: 20px auto;
     width: 90%;
+    color: #282828;
     max-width: 600px;
     background-color: #a89984; /* White background for list */
     border-radius: 8px;
@@ -253,7 +295,7 @@ h1 {
     position: fixed;
     top: 10px;
     right: 10px;
-    width: 200px;
+    width: 250px;
     height: auto;
     z-index: 1000; /* Make sure it's on top of other elements */
     display: block;
@@ -267,19 +309,22 @@ h1 {
 #kittenVideo {
     width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid #ebdbb2;
 }
 
 
 @media only screen and (max-width: 768px) {
     #titleContainer {
+        width: 83%;
+        margin-left: 20px;
         background: url("tumblr_n9yumpiQ3y1rmdq5eo8_500.gif") no-repeat center center;
         background-size: cover;
         background-blend-mode: multiply; /* To make text stand out against the GIF */
     }
     #dropzone {
     width: 80%; /* Increase width on smaller screens */
-    margin-top: 10px;
+    margin-left: 20px;
     height: 90px;
     padding: 35px;
     }
@@ -463,8 +508,9 @@ h1 {
     flex: 1;
     overflow-y: auto;
     padding: 10px;
-    background-color: #a89984;
     border-radius: 8px;
+    overflow-y: auto;
+    max-height: 160px; 
     margin-bottom: 10px;
 }
 
@@ -476,20 +522,22 @@ h1 {
 
 #chatInput {
     flex: 1;
-    background: #d5c4a1;
     padding: 10px;
-    border-radius: 8px;
-    border: 3px solid #504945;
+    width: 94%;
+    border: 1px solid #ebdbb2;
+    border-radius: 15px;
+    background-color: #333;
+    color: #ebdbb2;
 }
 
 #chatForm button {
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #282828;
-    color: #fff;
+    background-color: #504945;
+    color: #ebdbb2;
     border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    width: 94%;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 #chatForm button:hover {
@@ -499,6 +547,38 @@ h1 {
 input[type="checkbox"] {
     margin-right: 15px;
 }
+
+.dropdown-container {
+    transform-origin: top;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    display: none; /* Smooth transition for transform and opacity */
+}
+
+/* Active state styles for the dropdown container */
+.dropdown-container.show {
+    display: block;
+    max-height: 300px;/* Make the container fully visible */
+}
+
+/* General styles for the file dropdown button */
+#toggleFiles {
+    padding: 20px;
+    margin: 30px;
+    background-color: #504945;
+    color: #ebdbb2;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: margin-top 0.3s ease-out; 
+}
+
+/* Additional margin when the device list is shown */
+#deviceListContainer.show ~ #fileDropdown #toggleFiles {
+    margin-top: 20px; /* Add margin to push the button down */
+}
+
     </style>
 </head>
 <body>
@@ -513,10 +593,10 @@ input[type="checkbox"] {
     </div>
     
     <div id="deviceDropdown">
-        <button id="toggleDevices" style="padding: 20px; margin-left: 30px; background-color: #504945; color: #ebdbb2; border: none; border-radius: 50px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); cursor: pointer;">
+        <button id="toggleDevices" style="padding: 20px; margin-left: 10px; background-color: #504945; color: #ebdbb2; border: none; border-radius: 50px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); cursor: pointer;">
             Show Connected Devices
         </button>
-        <div id="deviceListContainer" style="display: none; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 5px;">
+        <div id="deviceListContainer" class="dropdown-container" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 5px; margin-left: 10px; display: none;">
             <h3>Connected Devices:</h3>
             <ul id="deviceList" style="list-style-type: none; padding: 0; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  margin: 0;"></ul>
         </div>
@@ -525,14 +605,15 @@ input[type="checkbox"] {
     <input type="file" id="fileInput" multiple hidden>
 
     <div id="fileDropdown">
-        <button id="toggleFiles" style="padding: 20px; margin: 30px; background-color: #504945; color: #ebdbb2; border: none; border-radius: 50px; cursor: pointer;">
+        <button id="toggleFiles" style="padding: 20px; margin-left: 10px; background-color: #504945; color: #ebdbb2; border: none; border-radius: 50px; cursor: pointer;">
             Show Uploaded Files
         </button>
-        <div id="fileListContainer" style="display: none; margin-top: 10px;">
+        <div id="fileListContainer" class="dropdown-container" style="margin-top: 10px; margin-left: 10px; display: none;">
             <h3>Uploaded Files:</h3>
             <ul id="fileList" style="list-style-type: none; padding: 0; margin: 0;"></ul>
         </div>
     </div>
+
     <div id="chatButton">Chat</div>
 
     <div id="chatContainer" class="hidden">
@@ -562,150 +643,73 @@ input[type="checkbox"] {
         const chatForm = document.getElementById('chatForm');
         const chatInput = document.getElementById('chatInput');
         const messages = document.getElementById('messages');
-        const chatToggle = document.getElementById('chatToggle');
         const chatContainer = document.getElementById('chatContainer');
         const chatButton = document.getElementById('chatButton');
         const chatClose = document.getElementById('chatClose');
         const socket = io();
         
-
         chatButton.addEventListener('click', function() {
-    chatContainer.classList.toggle('hidden');
-    chatContainer.classList.toggle('show'); // Ensure content is shown
-});
+            chatContainer.classList.toggle('hidden');
+            chatContainer.classList.toggle('show'); // Ensure content is shown
+        });
 
-chatClose.addEventListener('click', function() {
-    chatContainer.classList.add('hidden');
-    chatContainer.classList.remove('show');
-});
-
-    
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.add('hidden');
+            chatContainer.classList.remove('show');
+        });
 
         chatForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (chatInput.value) {
-        socket.emit('chat message', chatInput.value);
-        chatInput.value = '';
-    }
-});
+            e.preventDefault();
+            if (chatInput.value) {
+                socket.emit('chat message', chatInput.value);
+                chatInput.value = '';
+            }
+        });
 
-socket.on('chat message', function(msg) {
-    const item = document.createElement('div');
-    item.textContent = msg;
-    messages.appendChild(item);
-    messages.scrollTop = messages.scrollHeight; // Auto scroll to the bottom
-});   
+        socket.on('chat message', function(msg) {
+            const item = document.createElement('div');
+            item.textContent = msg;
+            messages.appendChild(item);
+            messages.scrollTop = messages.scrollHeight; // Auto scroll to the bottom
+        });
 
-        // Toggle the visibility of the file list
-    toggleFilesButton.addEventListener('click', () => {
-    if (fileListContainer.style.display === 'none') {
-        fileListContainer.style.display = 'block';
-        toggleFilesButton.textContent = 'Hide Uploaded Files';
-    } else {
-        fileListContainer.style.display = 'none';
-        toggleFilesButton.textContent = 'Show Uploaded Files';
-    }
-    });
-        // Handle file drop
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
         });
 
-    function uploadFiles(files) {
-        const formData = new FormData();
-        for (const file of files) {
-            formData.append('files', file);
-        }
-
-        fetch('/upload', {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            data.fileNames.forEach(fileName => {
-                socket.emit('file-upload', fileName);
-            });
-        })
-        .catch(error => console.error('Error uploading files:', error));
-    }
-
-    dropzone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadFiles(e.dataTransfer.files); // Handle dropped files
-    });
-
-    dropzone.addEventListener('click', () => {
-        const input = document.getElementById('fileInput');
-        input.onchange = (e) => {
-            uploadFiles(e.target.files); // Handle files selected from file dialog
-        };
-        input.click();
-    });
-
-// Handle incoming file updates
-socket.on('file-receive', (fileName) => {
-    // Add a new file to the list
-    const listItem = document.createElement('li');
-    const link = document.createElement('a');
-    link.href = `/uploads/${fileName}`;
-    link.textContent = fileName;
-    link.style.textDecoration = 'none';
-    link.style.color = '#007bff';
-    link.style.display = 'block';
-    link.style.marginBottom = '5px';
-    link.style.wordBreak = 'break-all'; // Ensure long file names break onto the next line if needed
-
-    listItem.appendChild(link);
-    fileList.appendChild(listItem);
-});
-
-// Toggle the visibility of the device list
-toggleDevicesButton.addEventListener('click', () => {
-    if (deviceListContainer.style.display === 'none') {
-        deviceListContainer.style.display = 'block';
-        toggleDevicesButton.textContent = 'Hide Connected Devices';
-    } else {
-        deviceListContainer.style.display = 'none';
-        toggleDevicesButton.textContent = 'Show Connected Devices';
-    }
-});
-
-
-socket.on('device-update', (data) => {
-    if (data.name) {
-        // Add a new device to the list
-        const listItem = document.createElement('li');
-        listItem.textContent = `${data.name} (${data.ip})`;
-        listItem.dataset.ip = data.ip;
-        deviceList.appendChild(listItem);
-    } else {
-        // Remove the device from the list
-        const items = deviceList.querySelectorAll('li');
-        items.forEach(item => {
-            if (item.dataset.ip === data.ip) {
-                item.remove();
+        function uploadFiles(files) {
+            const formData = new FormData();
+            for (const file of files) {
+                formData.append('files', file);
             }
-        });
-    }
-});
 
-// Optionally, fetch the current list of devices when the page loads
-fetch('/devices')
-    .then(response => response.json())
-    .then(devices => {
-        for (const [ip, name] of Object.entries(devices)) {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${name} (${ip})`;
-            listItem.dataset.ip = ip;
-            deviceList.appendChild(listItem);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                data.fileNames.forEach(fileName => {
+                    socket.emit('file-upload', fileName);
+                });
+            })
+            .catch(error => console.error('Error uploading files:', error));
         }
-    });
 
-    fetch('/files') // Make sure to implement this endpoint in your server
-    .then(response => response.json())
-    .then(files => {
-        for (const fileName of files) {
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadFiles(e.dataTransfer.files);
+        });
+
+        dropzone.addEventListener('click', () => {
+            const input = document.getElementById('fileInput');
+            input.onchange = (e) => {
+                uploadFiles(e.target.files);
+            };
+            input.click();
+        });
+
+        socket.on('file-receive', (fileName) => {
             const listItem = document.createElement('li');
             const link = document.createElement('a');
             link.href = `/uploads/${fileName}`;
@@ -714,13 +718,92 @@ fetch('/devices')
             link.style.color = '#007bff';
             link.style.display = 'block';
             link.style.marginBottom = '5px';
-            link.style.wordBreak = 'break-all'; 
+            link.style.wordBreak = 'break-all';
 
             listItem.appendChild(link);
             fileList.appendChild(listItem);
+        });
+
+        toggleFilesButton.addEventListener('click', () => {
+        if (fileListContainer.style.display === 'none' || fileListContainer.style.display === '') {
+            fileListContainer.style.display = 'block';
+            setTimeout(() => {
+                fileListContainer.style.maxHeight = fileListContainer.scrollHeight + 'px';
+            }, 0);
+            toggleFilesButton.textContent = 'Hide Uploaded Files';
+        } else {
+            fileListContainer.style.maxHeight = '0';
+            setTimeout(() => {
+                fileListContainer.style.display = 'none';
+            }, 300);
+            toggleFilesButton.textContent = 'Show Uploaded Files';
         }
     });
-    </script>
 
+// Toggle the visibility of the device list
+toggleDevicesButton.addEventListener('click', () => { deviceListContainer.classList.toggle('show');
+    if (deviceListContainer.style.display === 'none') {
+        deviceListContainer.style.display = 'block';
+        toggleDevicesButton.textContent = 'Hide Connected Devices';
+
+        // Adjust the margin of the file toggle button
+        toggleFilesButton.style.marginTop = `${deviceListContainer.offsetHeight}px`; // Dynamic margin based on the height of the device list
+    } else {
+        deviceListContainer.style.display = 'none';
+        toggleDevicesButton.textContent = 'Show Connected Devices';
+
+        // Reset the margin of the file toggle button
+        toggleFilesButton.style.marginTop = '5px'; // Reset to original margin
+    }
+});
+
+        socket.on('device-update', (data) => {
+            if (data.name) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${data.name} (${data.ip})`;
+                listItem.dataset.ip = data.ip;
+                deviceList.appendChild(listItem);
+            } else {
+                const items = deviceList.querySelectorAll('li');
+                items.forEach(item => {
+                    if (item.dataset.ip === data.ip) {
+                        item.remove();
+                    }
+                });
+            }
+        });
+
+        fetch('/devices')
+            .then(response => response.json())
+            .then(devices => {
+                for (const [ip, name] of Object.entries(devices)) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${name} (${ip})`;
+                    listItem.dataset.ip = ip;
+                    deviceList.appendChild(listItem);
+                }
+            })
+            .catch(error => console.error('Error fetching devices:', error));
+
+        fetch('/files')
+            .then(response => response.json())
+            .then(files => {
+                for (const fileName of files) {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `/uploads/${fileName}`;
+                    link.textContent = fileName;
+                    link.style.textDecoration = 'none';
+                    link.style.color = '#007bff';
+                    link.style.display = 'block';
+                    link.style.marginBottom = '5px';
+                    link.style.wordBreak = 'break-all';
+
+                    listItem.appendChild(link);
+                    fileList.appendChild(listItem);
+                }
+            })
+            .catch(error => console.error('Error fetching files:', error));
+    </script>
 </body>
 </html>
